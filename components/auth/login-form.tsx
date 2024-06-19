@@ -18,13 +18,10 @@ const LoginForm = () => {
     },
   });
 
-<<<<<<< HEAD
   const onSubmit = (data: z.infer<typeof LoginSchema>) => {
     console.log(data);
   };
 
-=======
->>>>>>> eafc2d953f72d7c18068a158261c686db0ba429e
   return (
     <CardWrapper
       headerLabel="Login"
@@ -33,11 +30,7 @@ const LoginForm = () => {
       showSocial
     >
       <Form {...form}>
-<<<<<<< HEAD
         <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
-=======
-        <form className="space-y-6" onSubmit={form.handleSubmit(console.log)}>
->>>>>>> eafc2d953f72d7c18068a158261c686db0ba429e
           <div>
             <FormField
               control={form.control}
