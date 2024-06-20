@@ -52,13 +52,10 @@ const CardWrapper = ({
         )}
       </CardContent>
       <CardFooter>
-        <Button
-          variant="ghost"
-          size="sm"
-          className="w-full"
-          asChild
-        >
-          <Link className="w-full" href={backButtonHref}>{backButtonLabel}</Link>
+        <Button variant="ghost" size="sm" className="w-full" asChild>
+          <Link className="w-full" href={backButtonHref}>
+            {backButtonLabel}
+          </Link>
         </Button>
       </CardFooter>
     </Card>
