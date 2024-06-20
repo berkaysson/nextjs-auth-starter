@@ -13,16 +13,14 @@ export const LoginButton = ({
   mode = "redirect",
   asChild,
 }: LoginButtonProps) => {
-    const router = useRouter();
+  const router = useRouter();
 
   const onClick = () => {
     router.push("/auth/login");
   };
 
-  if(mode === "modal") {
-    return (
-      <span>Hello modal</span>
-    );
+  if (mode === "modal") {
+    return <span>Hello modal</span>;
   }
 
   return (
