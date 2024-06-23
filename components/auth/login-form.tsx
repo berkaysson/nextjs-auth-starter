@@ -16,10 +16,11 @@ import {
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { login } from "@/actions/login";
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 
 const LoginForm = () => {
   const [isPending, startTransition] = useTransition();
+  const [error, setError] = useState("");
 
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
@@ -32,7 +33,9 @@ const LoginForm = () => {
   const onSubmit = (data: z.infer<typeof LoginSchema>) => {
     startTransition(() => {
       login(data).then((data: any) => {
-        console.log("🚀 ~ login ~ data:", data);
+        if (data.error) {
+          setError(data.error);
+        }
       });
     });
   };
@@ -82,6 +85,13 @@ const LoginForm = () => {
               )}
             />
           </div>
+
+          {error && (
+            <FormMessage className="text-destructive" role="alert">
+              {error}
+            </FormMessage>
+          )}
+
           <Button
             disabled={isPending}
             variant="default"
