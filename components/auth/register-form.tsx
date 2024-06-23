@@ -16,7 +16,7 @@ import {
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { login } from "@/actions/login";
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import { register } from "@/actions/register";
 
 const RegisterForm = () => {
