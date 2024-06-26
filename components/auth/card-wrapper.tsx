@@ -10,6 +10,7 @@ import {
   CardDescription,
   CardTitle,
 } from "../ui/card";
+import Socials from "./socials";
 
 interface CardWrapperProps {
   children: React.ReactNode;
@@ -34,23 +35,7 @@ const CardWrapper = ({
         </CardTitle>
       </CardHeader>
       <CardContent>{children}</CardContent>
-      <CardContent>
-        {showSocial && (
-          <>
-            <p className="text-sm text-muted-foreground">
-              or continue with these social providers
-            </p>
-            <div className="flex gap-4 mt-2">
-              <Button variant={"outline"} size={"sm"}>
-                Google
-              </Button>
-              <Button variant={"outline"} size={"sm"}>
-                Github
-              </Button>
-            </div>
-          </>
-        )}
-      </CardContent>
+      <CardContent>{showSocial && <Socials />}</CardContent>
       <CardFooter>
         <Button variant="ghost" size="sm" className="w-full" asChild>
           <Link className="w-full" href={backButtonHref}>
