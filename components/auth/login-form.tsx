@@ -33,9 +33,8 @@ const LoginForm = () => {
   const onSubmit = (data: z.infer<typeof LoginSchema>) => {
     startTransition(() => {
       login(data).then((data: any) => {
-        if (data.error) {
-          setError(data.error);
-        }
+        console.log("🚀 ~ file: login-form.tsx:36 ~ login ~ data:", data)
+        
       });
     });
   };
