@@ -10,3 +10,7 @@ export const RegisterSchema = z.object({
   password: z.string().min(6, "Password too short"),
   name: z.string().min(1, "Name is required"),
 });
+
+export const ResetSchema = z.object({
+  email: z.string().email().min(1, "Email is required"),
+});

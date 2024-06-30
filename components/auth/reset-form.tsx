@@ -3,7 +3,7 @@
 import { useForm } from "react-hook-form";
 import CardWrapper from "./card-wrapper";
 import { z } from "zod";
-import { LoginSchema } from "@/schemas";
+import { ResetSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
@@ -15,36 +15,34 @@ import {
 } from "../ui/form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { login } from "@/actions/login";
 import { useState, useTransition } from "react";
-import Link from "next/link";
+import { reset } from "@/actions/reset";
 
-const LoginForm = () => {
+const ResetForm = () => {
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState("");
 
-  const form = useForm<z.infer<typeof LoginSchema>>({
-    resolver: zodResolver(LoginSchema),
+  const form = useForm<z.infer<typeof ResetSchema>>({
+    resolver: zodResolver(ResetSchema),
     defaultValues: {
       email: "",
-      password: "",
     },
   });
 
-  const onSubmit = (data: z.infer<typeof LoginSchema>) => {
+  const onSubmit = (data: z.infer<typeof ResetSchema>) => {
     startTransition(() => {
-      login(data).then((data: any) => {
-        console.log("🚀 ~ file: login-form.tsx:36 ~ login ~ data:", data);
+      reset(data).then((data: any) => {
+        console.log("🚀 ~ file: reset-form.tsx:35 ~ reset ~ data:", data);
+        setError(data?.error);
       });
     });
   };
 
   return (
     <CardWrapper
-      headerLabel="Login"
-      backButtonHref="/auth/register"
-      backButtonLabel="Back to Home"
-      showSocial
+      headerLabel="Reset Your Password"
+      backButtonHref="/auth/login"
+      backButtonLabel="Back to Login"
     >
       <Form {...form}>
         <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
@@ -66,26 +64,6 @@ const LoginForm = () => {
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input
-                      disabled={isPending}
-                      {...field}
-                      placeholder="********"
-                      type="password"
-                    />
-                  </FormControl>
-                  <Button variant="link" size={"sm"} asChild className="p-0">
-                    <Link href="/auth/reset">Forgot Password?</Link>
-                  </Button>
-                </FormItem>
-              )}
-            />
           </div>
 
           {error && (
@@ -100,7 +78,7 @@ const LoginForm = () => {
             type="submit"
             className="w-full"
           >
-            Login
+            Reset Password
           </Button>
         </form>
       </Form>
@@ -108,4 +86,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default ResetForm;
