@@ -21,7 +21,7 @@ import { newPassword } from "@/actions/new-password";
 
 const NewPasswordForm = () => {
   const [isPending, startTransition] = useTransition();
-  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
 
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
@@ -36,12 +36,7 @@ const NewPasswordForm = () => {
   const onSubmit = (data: z.infer<typeof NewPasswordSchema>) => {
     startTransition(() => {
       newPassword(data, token).then((data: any) => {
-        if (data.error) {
-          setError(data.error);
-        }
-        if (data.success) {
-          setError(data.success);
-        }
+        setMessage(data.message);
       });
     });
   };
@@ -74,9 +69,9 @@ const NewPasswordForm = () => {
             />
           </div>
 
-          {error && (
-            <FormMessage className="text-destructive" role="alert">
-              {error}
+          {message && (
+            <FormMessage>
+              {message}
             </FormMessage>
           )}
 

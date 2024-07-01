@@ -20,7 +20,7 @@ import { reset } from "@/actions/reset";
 
 const ResetForm = () => {
   const [isPending, startTransition] = useTransition();
-  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
 
   const form = useForm<z.infer<typeof ResetSchema>>({
     resolver: zodResolver(ResetSchema),
@@ -32,8 +32,7 @@ const ResetForm = () => {
   const onSubmit = (data: z.infer<typeof ResetSchema>) => {
     startTransition(() => {
       reset(data).then((data: any) => {
-        console.log("🚀 ~ file: reset-form.tsx:35 ~ reset ~ data:", data);
-        setError(data?.error);
+        setMessage(data.message);
       });
     });
   };
@@ -66,9 +65,9 @@ const ResetForm = () => {
             />
           </div>
 
-          {error && (
-            <FormMessage className="text-destructive" role="alert">
-              {error}
+          {message && (
+            <FormMessage>
+              {message}
             </FormMessage>
           )}
 

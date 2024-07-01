@@ -12,29 +12,29 @@ export const newPassword = async (
   token?: string | null
 ) => {
   if (!token) {
-    return { error: "Invalid token" };
+    return { message: "Invalid token" };
   }
 
   const validatedFields = NewPasswordSchema.safeParse(data);
 
   if (!validatedFields.success) {
-    return { error: "Invalid fields!" };
+    return { message: "Invalid fields!" };
   }
 
   const existingToken = await getResetPasswordTokenByToken(token);
 
   if (!existingToken) {
-    return { error: "Token does not exist!" };
+    return { message: "Token does not exist!" };
   }
 
   if (new Date() > new Date(existingToken.expires)) {
-    return { error: "Token has expired!" };
+    return { message: "Token has expired!" };
   }
 
   const existingUser = await getUserByEmail(existingToken.email);
 
   if (!existingUser) {
-    return { error: "User does not exist!" };
+    return { message: "User does not exist!" };
   }
 
   const { password } = validatedFields.data;
@@ -49,5 +49,5 @@ export const newPassword = async (
     where: { id: existingToken.id },
   });
 
-  return { success: "Password changed successfully" };
+  return { message: "Password changed successfully" };
 };

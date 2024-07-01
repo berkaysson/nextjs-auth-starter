@@ -13,7 +13,7 @@ export const login = async (data: z.infer<typeof LoginSchema>) => {
   const validatedFields = LoginSchema.safeParse(data);
 
   if (!validatedFields.success) {
-    return { error: "Invalid fields!" };
+    return { message: "Invalid fields!" };
   }
 
   const { email, password } = validatedFields.data;
@@ -21,7 +21,7 @@ export const login = async (data: z.infer<typeof LoginSchema>) => {
   const existingUser = await getUserByEmail(email);
 
   if (!existingUser || !existingUser.email || !existingUser.password) {
-    return { error: "Email does not exist!" };
+    return { message: "Email does not exist!" };
   }
 
   if (!existingUser.emailVerified) {
@@ -34,7 +34,7 @@ export const login = async (data: z.infer<typeof LoginSchema>) => {
       verificationToken.token
     );
 
-    return { success: "Confirmation email sent!" };
+    return { message: "Confirmation email sent!" };
   }
 
   try {
@@ -48,9 +48,9 @@ export const login = async (data: z.infer<typeof LoginSchema>) => {
       console.log("🚀 ~ file: login.ts:25 ~ login ~ error:", error);
       switch (error.type) {
         case "CredentialsSignin":
-          return { error: "Invalid credentials!" };
+          return { message: "Invalid credentials!" };
         default:
-          return { error: "Authentication error" };
+          return { message: "Authentication error" };
       }
     }
 

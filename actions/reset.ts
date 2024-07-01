@@ -9,12 +9,12 @@ import * as z from "zod";
 export const reset = async (data: z.infer<typeof ResetSchema>) => {
   const validatedFields = ResetSchema.safeParse(data);
   if (!validatedFields.success) {
-    return { error: "Invalid fields!" };
+    return { message: "Invalid fields!" };
   }
   const { email } = validatedFields.data;
   const user = await getUserByEmail(email);
   if (!user) {
-    return { error: "Email does not exist!" };
+    return { message: "Email does not exist!" };
   }
 
   const resetPasswordToken = await generateResetPasswordToken(email);
@@ -23,5 +23,5 @@ export const reset = async (data: z.infer<typeof ResetSchema>) => {
     resetPasswordToken.token
   );
 
-  return { success: "Email Sent" };
+  return { message: "Email Sent" };
 };

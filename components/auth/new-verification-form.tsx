@@ -6,27 +6,22 @@ import { useCallback, useEffect, useState } from "react";
 import { newVerification } from "@/actions/new-verification";
 
 const NewVerificationForm = () => {
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
+  const [message, setMessage] = useState("");
 
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
 
   const onSubmit = useCallback(() => {
     if (!token) {
-      setError("Invalid token");
+      setMessage("Invalid token");
       return;
     }
     newVerification(token)
       .then((data) => {
-        if (data.error) {
-          setError(data.error);
-        } else if (data.success) {
-          setSuccess(data.success);
-        }
+        setMessage(data.message);
       })
       .catch((error) => {
-        setError("Something went wrong. Please try again later.");
+        setMessage("Something went wrong. Please try again later.");
       });
   }, [token]);
 
@@ -47,9 +42,8 @@ const NewVerificationForm = () => {
       backButtonHref="/auth/login"
       showSocial={false}
     >
-      {!error && !success && <p>Confirming your verification...</p>}
-      {error && <p className="text-red-500">{error}</p>}
-      {success && <p className="text-green-500">{success}</p>}
+      {!message && <p>Confirming your verification...</p>}
+      {message && <p>{message}</p>}
     </CardWrapper>
   );
 };

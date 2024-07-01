@@ -21,7 +21,7 @@ import Link from "next/link";
 
 const LoginForm = () => {
   const [isPending, startTransition] = useTransition();
-  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
 
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
@@ -34,7 +34,7 @@ const LoginForm = () => {
   const onSubmit = (data: z.infer<typeof LoginSchema>) => {
     startTransition(() => {
       login(data).then((data: any) => {
-        console.log("🚀 ~ file: login-form.tsx:36 ~ login ~ data:", data);
+        setMessage(data.message);
       });
     });
   };
@@ -88,9 +88,9 @@ const LoginForm = () => {
             />
           </div>
 
-          {error && (
-            <FormMessage className="text-destructive" role="alert">
-              {error}
+          {message && (
+            <FormMessage>
+              {message}
             </FormMessage>
           )}
 
