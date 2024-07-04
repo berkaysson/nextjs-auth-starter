@@ -6,6 +6,18 @@ import { LoginSchema } from "./schemas";
 import { getUserByEmail } from "./data/user";
 import bcrypt from "bcryptjs";
 
+/**
+ * NextAuth configuration with GitHub, Google, and credentials providers.
+ * Add other providers as needed.
+ *
+ * - GitHub and Google: Use OAuth for authentication.
+ * - Credentials: Custom provider for email and password authentication.
+ * - Passwords are compared using bcrypt.
+ * - Login credentials are validated using Zod.
+ * 
+ * This file is used in auth.ts to configure NextAuth.
+ */
+
 export default {
   providers: [
     GitHub({

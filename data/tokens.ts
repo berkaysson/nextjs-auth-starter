@@ -3,9 +3,20 @@ import { getVerificationTokenByEmail } from "./verification-token";
 import db from "@/lib/db";
 import { getResetPasswordTokenByEmail } from "./reset-password-token";
 
+// 1 hour
+const TOKEN_EXPIRY = 3600 * 1000;
+
+// db(PrismaClient) is defined in lib/db.ts,
+
+/**
+ * Generates a verification token for the given email.
+ *
+ * @param {string} email - The email for which the verification token is generated.
+ * @return {Promise<VerificationToken>} The generated verification token.
+ */
 export const generateVerificationToken = async (email: string) => {
   const token = uuid();
-  const expires = new Date(new Date().getTime() + 3600 * 1000);
+  const expires = new Date(new Date().getTime() + TOKEN_EXPIRY);
 
   const existingToken = await getVerificationTokenByEmail(email);
 
@@ -24,9 +35,15 @@ export const generateVerificationToken = async (email: string) => {
   return verificationToken;
 };
 
+/**
+ * Generates a reset password token for the given email.
+ *
+ * @param {string} email - The email for which the reset password token is generated.
+ * @return {Promise<ResetPasswordToken>} The generated reset password token.
+ */
 export const generateResetPasswordToken = async (email: string) => {
   const token = uuid();
-  const expires = new Date(new Date().getTime() + 3600 * 1000);
+  const expires = new Date(new Date().getTime() + TOKEN_EXPIRY);
 
   const existingToken = await getResetPasswordTokenByEmail(email);
 

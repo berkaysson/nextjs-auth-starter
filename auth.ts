@@ -5,6 +5,21 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import { getUserById } from "./data/user";
 import { UserRole } from "@prisma/client";
 
+/**
+ * NextAuth configuration with custom callbacks and Prisma adapter.
+ *
+ * - Callbacks:
+ *   - `signIn`: Validates user sign-in, ensuring email is verified for credentials provider.
+ *   - `session`: Adds user ID and role to the session object.
+ *   - `jwt`: Adds user role to the JWT token.
+ * - Events:
+ *   - `linkAccount`: Marks email as verified when a new account is linked.
+ * - Adapter: Uses Prisma adapter for database interactions.
+ * - Session strategy: Uses JWT for sessions.
+ * - Additional configurations from `authConfig`.
+ * - handlers is called in app/api/auth/[...nextauth]/route.ts
+ */
+
 export const { auth, handlers, signIn, signOut } = NextAuth({
   callbacks: {
     async signIn({ user, account }) {
@@ -22,6 +37,9 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       if (token.sub && session.user) {
         session.user.id = token.sub;
         session.user.role = token.role as UserRole;
+        // add more fields to the session object if needed
+        // to add additional fields also update the next-auth.d.ts file like UserRole
+        // for more info check next-auth.d.ts
       }
       return session;
     },

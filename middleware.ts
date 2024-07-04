@@ -8,6 +8,14 @@ import {
 } from "./routes";
 const { auth } = NextAuth(authConfig);
 
+/**
+ * Middleware for handling authentication and route protection.
+ *
+ * - Redirects logged-in users away from auth routes.
+ * - Redirects unauthenticated users to the login page.
+ * - Allows public routes and API auth routes without restrictions.
+ */
+
 export default auth((req) => {
   const { nextUrl } = req;
   const isLoggedIn = !!req.auth;

@@ -34,7 +34,9 @@ const LoginForm = () => {
   const onSubmit = (data: z.infer<typeof LoginSchema>) => {
     startTransition(() => {
       login(data).then((data: any) => {
-        setMessage(data.message);
+        if (data.message) {
+          setMessage(data.message);
+        }
       });
     });
   };

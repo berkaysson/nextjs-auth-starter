@@ -1,9 +1,16 @@
+import { MAIN_DOMAIN } from "@/routes";
 import { Resend } from "resend";
 
+// Initialize Resend with API key from environment variables
 const resend = new Resend(process.env.RESEND_API_KEY);
 
+// update links according to your needs
+// MAIN_DOMAIN can be set in routes.ts, http://localhost:3000 for example
+// update from addresses according to your needs
+
+// Send verification email
 export const sendVerificationEmail = async (email: string, token: string) => {
-  const confirmLink = `http://localhost:3000/auth/new-verification?token=${token}`;
+  const confirmLink = `${MAIN_DOMAIN}/auth/new-verification?token=${token}`;
 
   await resend.emails.send({
     from: "onboarding@resend.dev",
@@ -13,8 +20,9 @@ export const sendVerificationEmail = async (email: string, token: string) => {
   });
 };
 
+// Send reset password email
 export const sendResetPasswordEmail = async (email: string, token: string) => {
-  const resetLink = `http://localhost:3000/auth/new-password?token=${token}`;
+  const resetLink = `${MAIN_DOMAIN}/auth/new-password?token=${token}`;
 
   await resend.emails.send({
     from: "onboarding@resend.dev",
