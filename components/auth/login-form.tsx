@@ -50,7 +50,7 @@ const LoginForm = () => {
     >
       <Form {...form}>
         <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
-          <div>
+          <div className="flex flex-col gap-4">
             <FormField
               control={form.control}
               name="email"
@@ -65,6 +65,11 @@ const LoginForm = () => {
                       type="email"
                     />
                   </FormControl>
+                  {form.formState.errors.email && (
+                    <FormMessage>
+                      {form.formState.errors.email.message}
+                    </FormMessage>
+                  )}
                 </FormItem>
               )}
             />

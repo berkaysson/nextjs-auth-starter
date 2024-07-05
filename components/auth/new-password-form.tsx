@@ -49,7 +49,7 @@ const NewPasswordForm = () => {
     >
       <Form {...form}>
         <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
-          <div>
+          <div className="flex flex-col gap-4">
             <FormField
               control={form.control}
               name="password"
@@ -64,6 +64,11 @@ const NewPasswordForm = () => {
                       type="password"
                     />
                   </FormControl>
+                  {form.formState.errors.password && (
+                    <FormMessage>
+                      {form.formState.errors.password.message}
+                    </FormMessage>
+                  )}
                 </FormItem>
               )}
             />

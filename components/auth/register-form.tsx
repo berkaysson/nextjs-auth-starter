@@ -49,7 +49,7 @@ const RegisterForm = () => {
     >
       <Form {...form}>
         <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
-          <div>
+          <div className="flex flex-col gap-4">
             <FormField
               control={form.control}
               name="email"
@@ -64,6 +64,11 @@ const RegisterForm = () => {
                       type="email"
                     />
                   </FormControl>
+                  {form.formState.errors.email && (
+                    <FormMessage>
+                      {form.formState.errors.email.message}
+                    </FormMessage>
+                  )}
                 </FormItem>
               )}
             />
@@ -81,6 +86,11 @@ const RegisterForm = () => {
                       type="password"
                     />
                   </FormControl>
+                  {form.formState.errors.password && (
+                    <FormMessage>
+                      {form.formState.errors.password.message}
+                    </FormMessage>
+                  )}
                 </FormItem>
               )}
             />
@@ -98,16 +108,17 @@ const RegisterForm = () => {
                       type="name"
                     />
                   </FormControl>
+                  {form.formState.errors.name && (
+                    <FormMessage className="mb-2">
+                      {form.formState.errors.name.message}
+                    </FormMessage>
+                  )}
                 </FormItem>
               )}
             />
           </div>
 
-          {message && (
-            <FormMessage>
-              {message}
-            </FormMessage>
-          )}
+          {message && <FormMessage>{message}</FormMessage>}
 
           <Button
             disabled={isPending}
