@@ -8,6 +8,7 @@ import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { LoginSchema } from "@/schemas";
 import { AuthError } from "next-auth";
 import { z } from "zod";
+import bcrypt from "bcryptjs";
 
 /**
  * Authenticates user login based on provided data.
@@ -32,6 +33,12 @@ export const login = async (data: z.infer<typeof LoginSchema>) => {
   const existingUser = await getUserByEmail(email);
   if (!existingUser || !existingUser.email || !existingUser.password) {
     return { message: "Email does not exist!" };
+  }
+
+  // Compare the provided password with the stored password
+  const isValidPassword = await bcrypt.compare(password, existingUser.password);
+  if (!isValidPassword) {
+    return { message: "Invalid credentials!" };
   }
 
   // If the user hasn't verified their email, send a verification email and return a message
