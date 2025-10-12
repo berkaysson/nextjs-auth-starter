@@ -22,7 +22,7 @@ const SettingsPage = () => {
         <h2 className="text-2xl font-semibold mb-4">User Settings</h2>
         {status === "authenticated" ? (
           <div className="mb-4">
-            <p className="text-gray-700">
+            {/* <p className="text-gray-700">
               <strong>Name:</strong> {session.user.name}
             </p>
             <p className="text-gray-700">
@@ -30,7 +30,7 @@ const SettingsPage = () => {
             </p>
             <p className="text-gray-700">
               <strong>Role:</strong> {session.user.role}
-            </p>
+            </p> */}
 
             <Button
               variant={"outline"}
